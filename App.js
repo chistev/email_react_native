@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Text, StyleSheet, Platform, ScrollView } from "react-native";
 import { IconButton, Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import mailData from './data/mail.json';
 
 const Navbar = () => {
   const theme = {
@@ -10,6 +11,9 @@ const Navbar = () => {
     },
   };
 
+  const inbox = mailData.find(folder => folder.name === "Inbox");
+  const emails = inbox ? inbox.mail : [];
+
   return (
     <PaperProvider theme={theme}>
       <View>
@@ -18,12 +22,20 @@ const Navbar = () => {
           <Text style={styles.title}>CSE186 Mail - Inbox</Text>
         </View>
         
-        {/* Message Row */}
-        <View style={styles.messageRow}>
-          <Text style={styles.sender}>Bob Dylan</Text>
-          <Text style={styles.message} numberOfLines={1}>Fancy a brew toni...</Text>
-          <Text style={styles.time}>10:32</Text>
-        </View>
+        {/* ScrollView to display all messages */}
+        <ScrollView style={styles.messagesContainer}>
+          {emails.map((email) => {
+            const receivedTime = new Date(email.received).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            return (
+              <View style={styles.messageRow} key={email.id}>
+                <Text style={styles.sender}>{email.from.name}</Text>
+                <Text style={styles.message} numberOfLines={1}>{email.subject}</Text>
+                <Text style={styles.time}>{receivedTime}</Text>
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
     </PaperProvider>
   );
@@ -43,10 +55,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  messagesContainer: {
+    padding: 10,
+  },
   messageRow: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    paddingVertical: 10,
   },
   sender: {
     fontSize: 14,
