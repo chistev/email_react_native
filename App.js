@@ -47,17 +47,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
   },
   sender: {
-    fontWeight: "bold",
     fontSize: 14,
     marginRight: 10,
   },
   message: {
     flex: 1,
-    color: "gray",
   },
   time: {
     color: "gray",
