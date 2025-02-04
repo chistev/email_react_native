@@ -25,7 +25,7 @@ const Navbar = () => {
           <IconButton 
             icon="menu" 
             size={24} 
-            iconColor="white" 
+            color="white" // Changed to 'color'
             onPress={() => setIsMenuOpen(!isMenuOpen)} 
           />
           <Text style={styles.title}>CSE186 Mail - Inbox</Text>
@@ -34,14 +34,17 @@ const Navbar = () => {
         {/* Sidebar Menu */}
         {isMenuOpen && (
           <View style={styles.sidebar}>
-            <TouchableOpacity onPress={() => setIsMenuOpen(false)}>
-              <Text style={styles.menuItem}>Inbox</Text>
+            <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              <IconButton icon="inbox" size={20} color="black" style={styles.icon} /> {/* Changed to 'color' */}
+              <Text style={styles.menuText}>Inbox</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setIsMenuOpen(false)}>
-              <Text style={styles.menuItem}>Important</Text>
+            <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              <IconButton icon="star" size={20} color="black" style={styles.icon} /> {/* Changed to 'color' */}
+              <Text style={styles.menuText}>Important</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setIsMenuOpen(false)}>
-              <Text style={styles.menuItem}>Trash</Text>
+            <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              <IconButton icon="delete" size={20} color="black" style={styles.icon} /> {/* Changed to 'color' */}
+              <Text style={styles.menuText}>Trash</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -86,17 +89,23 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: Platform.OS === 'ios' ? 90 : 90,
     left: 0,
-    width: 200,
+    width: 170,
     height: "100%",
     backgroundColor: "#F1F1F1",
     padding: 20,
     zIndex: 10,
   },
   menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 15, // Increased padding to make space for the larger icon
+  },
+  menuText: {
     fontSize: 16,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    marginLeft: 15, // Space between the icon and the text
+  },
+  icon: {
+    marginRight: 1, // Space between icon and text
   },
   messagesContainer: {
     padding: 10,
