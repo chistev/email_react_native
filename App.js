@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Platform, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { useState } from "react"; 
+import { View, Text, StyleSheet, Platform, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import { IconButton, Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import mailData from './data/mail.json';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState("Inbox"); // Track the selected folder
 
   const theme = {
     ...DefaultTheme,
@@ -14,8 +15,9 @@ const Navbar = () => {
     },
   };
 
-  const inbox = mailData.find(folder => folder.name === "Inbox");
-  const emails = inbox ? inbox.mail : [];
+  // Find the emails for the selected folder
+  const folder = mailData.find(folder => folder.name === selectedFolder);
+  const emails = folder ? folder.mail : [];
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -33,28 +35,44 @@ const Navbar = () => {
               color="white" 
               onPress={() => setIsMenuOpen(!isMenuOpen)} 
             />
-            <Text style={styles.title}>CSE186 Mail - Inbox</Text>
+            <Text style={styles.title}>{`CSE186 Mail - ${selectedFolder}`}</Text>
           </View>
 
           {/* Sidebar Menu */}
           {isMenuOpen && (
             <View style={styles.sidebar}>
-              <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              {/* Sidebar items for different folders */}
+              <TouchableOpacity 
+                onPress={() => {
+                  setSelectedFolder("Inbox"); 
+                  setIsMenuOpen(false); 
+                }} 
+                style={styles.menuItem}>
                 <IconButton icon="inbox" size={20} color="black" style={styles.icon} />
                 <Text style={styles.menuText}>Inbox</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              <TouchableOpacity 
+                onPress={() => {
+                  setSelectedFolder("Important");
+                  setIsMenuOpen(false);
+                }} 
+                style={styles.menuItem}>
                 <IconButton icon="star" size={20} color="black" style={styles.icon} />
                 <Text style={styles.menuText}>Important</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setIsMenuOpen(false)} style={styles.menuItem}>
+              <TouchableOpacity 
+                onPress={() => {
+                  setSelectedFolder("Trash");
+                  setIsMenuOpen(false);
+                }} 
+                style={styles.menuItem}>
                 <IconButton icon="delete" size={20} color="black" style={styles.icon} />
                 <Text style={styles.menuText}>Trash</Text>
               </TouchableOpacity>
             </View>
           )}
 
-          {/* ScrollView to display all messages */}
+          {/* ScrollView to display all messages based on selected folder */}
           <ScrollView style={styles.messagesContainer}>
             {emails.map((email) => {
               const receivedTime = new Date(email.received).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
