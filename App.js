@@ -30,14 +30,25 @@ const App = () => {
 
         {/* Navbar */}
         <View style={styles.navbar}>
-          <IconButton 
-            icon="menu" 
-            size={24} 
-            color="white" 
-            onPress={() => setIsMenuOpen(!isMenuOpen)} 
-          />
-          <Text style={styles.title}>CSE186 Mail - {selectedFolder}</Text>
-        </View>
+  <IconButton 
+    icon="menu" 
+    size={24} 
+    color="white" 
+    onPress={() => setIsMenuOpen(!isMenuOpen)} 
+  />
+  <Text style={styles.title}>CSE186 Mail - {selectedFolder}</Text>
+  {selectedEmail && (
+    <IconButton 
+      icon="close" 
+      size={24} 
+      color="white" 
+      onPress={closeEmail} 
+      style={styles.closeButton} 
+    />
+  )}
+</View>
+
+
 
         {/* Sidebar Menu */}
         {isMenuOpen && (
