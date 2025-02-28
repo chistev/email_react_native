@@ -62,7 +62,10 @@ const App = () => {
             {["Inbox", "Important", "Trash"].map((folderName) => (
               <TouchableOpacity 
                 key={folderName}
-                onPress={() => { setSelectedFolder(folderName); setIsMenuOpen(false); }} 
+                onPress={() => { setSelectedFolder(folderName); 
+                setIsMenuOpen(false);
+                setSelectedEmail(null);
+                 }} 
                 style={styles.menuItem}
               >
                 <IconButton 
