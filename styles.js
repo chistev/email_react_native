@@ -4,9 +4,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  navbar: {
+   navbar: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: "#0078D4",
     height: 50,
     paddingHorizontal: 10,
@@ -16,6 +17,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+    flex: 1, 
+  },
+  closeButton: {
+    position: "absolute",
+    right: 10,
   },
   sidebar: {
     position: "absolute",
